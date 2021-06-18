@@ -20,7 +20,7 @@ public class User {
 	}
 	
 	public User(DeviceContact of) {
-		this.number = of.getNumber();
+		this.number = of.getAddress().getNumber().orNull();
 		this.name = of.getName().orNull();
 		this.color = of.getColor().orNull();
 	}

@@ -64,7 +64,7 @@ public class JsonSignalStore extends SignalStore {
 	private int nextSignedPreKeyId;
 
 	@JsonProperty
-	private HashMap<String, IdentityKey> identities = new HashMap<>();
+	private HashMap<SignalProtocolAddress, IdentityKey> identities = new HashMap<>();
 	@JsonProperty
 	private HashMap<Integer, PreKeyRecord> preKeys = new HashMap<>();
 	@JsonProperty
@@ -105,7 +105,12 @@ public class JsonSignalStore extends SignalStore {
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		mapper.writeValue(file, this);
 	}
-	
+
+	@Override
+	public IdentityKey getIdentity(SignalProtocolAddress address){
+		return identities.get(address);
+	}
+
 	@Override
 	public DataStore getDataStore() {
 		return dataStore;
@@ -129,22 +134,15 @@ public class JsonSignalStore extends SignalStore {
 	}
 
 	@Override
-	@JsonIgnore
-	public void saveIdentity(String name, IdentityKey identityKey) {
-		identities.put(name, identityKey);
-	}
-	
-	@Override
-	@JsonIgnore
-	public IdentityKey getIdentity(String name) {
-		return identities.get(name);
+	public boolean saveIdentity(SignalProtocolAddress address,IdentityKey identityKey){
+		identities.put(address,identityKey);
+		return true;
 	}
 
 	@Override
 	@JsonIgnore
 	public PreKeyRecord loadPreKey(int preKeyId) throws InvalidKeyIdException {
-		PreKeyRecord record = preKeys.get(preKeyId);
-		return record;
+		return preKeys.get(preKeyId);
 	}
 
 	@Override
@@ -204,7 +202,7 @@ public class JsonSignalStore extends SignalStore {
 	@Override
 	@JsonIgnore
 	public List<SignedPreKeyRecord> loadSignedPreKeys() {
-		return new ArrayList<SignedPreKeyRecord>(signedPreKeys.values());
+		return new ArrayList<>(signedPreKeys.values());
 	}
 
 	@Override

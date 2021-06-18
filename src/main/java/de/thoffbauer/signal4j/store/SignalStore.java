@@ -18,12 +18,10 @@ import org.whispersystems.signalservice.api.push.SignalServiceAddress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public abstract class SignalStore implements SignalProtocolStore {
-	
 	@Override
-	@JsonIgnore
-	public boolean isTrustedIdentity(String name, IdentityKey identityKey) {
-		IdentityKey storedIdentity = getIdentity(name);
-		return storedIdentity == null || identityKey.equals(storedIdentity);
+	public boolean isTrustedIdentity(SignalProtocolAddress address, IdentityKey identityKey, Direction direction) {
+		IdentityKey storedIdentity = getIdentity(address);
+		return storedIdentity==null || identityKey.equals(storedIdentity);
 	}
 	
 	@Override
@@ -64,7 +62,7 @@ public abstract class SignalStore implements SignalProtocolStore {
 	
 	public abstract DataStore getDataStore();
 
-	public abstract IdentityKey getIdentity(String name);
+	public abstract IdentityKey getIdentity(SignalProtocolAddress address);
 	public abstract Iterable<Entry<SignalProtocolAddress, SessionRecord>> getSessions();
 	public abstract SessionRecord getSession(SignalProtocolAddress address);
 	

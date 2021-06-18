@@ -3,12 +3,13 @@ package de.thoffbauer.signal4j.store;
 import java.util.ArrayList;
 
 import org.whispersystems.signalservice.api.messages.multidevice.DeviceGroup;
+import org.whispersystems.signalservice.api.push.SignalServiceAddress;
 
 public class Group {
 	
 	private GroupId id;
 	private String name;
-	private ArrayList<String> members;
+	private ArrayList<SignalServiceAddress> members;
 	private String avatarId;
 	private boolean active;
 	private int messageExpirationTime;
@@ -44,11 +45,11 @@ public class Group {
 		this.name = name;
 	}
 
-	public ArrayList<String> getMembers() {
+	public ArrayList<SignalServiceAddress> getMembers() {
 		return members;
 	}
 
-	public void setMembers(ArrayList<String> members) {
+	public void setMembers(ArrayList<SignalServiceAddress> members) {
 		this.members = members;
 	}
 
