@@ -12,7 +12,7 @@ public class SignalProtocolAddressDeserializer extends KeyDeserializer {
 
 	@Override
 	public Object deserializeKey(String key, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-		String[] split = key.split("\\.");
+		String[] split = key.split("\\|");
 		return new SignalProtocolAddress(split[0], Integer.valueOf(split[1]));
 	}
 	

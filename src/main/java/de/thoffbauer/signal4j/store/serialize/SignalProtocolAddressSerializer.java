@@ -14,7 +14,7 @@ public class SignalProtocolAddressSerializer extends StdKeySerializer {
 	@Override
 	public void serialize(Object value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
 		SignalProtocolAddress address = (SignalProtocolAddress) value;
-		jgen.writeFieldName(address.getName() + "." + address.getDeviceId());
+		jgen.writeFieldName(address.getName() + "|" + address.getDeviceId());
 	}
 
 }
